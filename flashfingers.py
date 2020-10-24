@@ -174,14 +174,11 @@ class Flashfingers:
             validChars = ''.join([chr(i) for i in range(33, 127)])
             stringLength = 20
         
-        # Build the string using random valid characters
-        randomString = ''.join([choice(validChars) for i in range(stringLength)])
-
-        # Return the randomly generated string
-        return randomString
+        # Build and return the string using random valid characters
+        return ''.join([choice(validChars) for i in range(stringLength)])
     
 
-    # Generate a new string and reset the time label
+    # Generate a new string and set up the session
     def __new_session(self, difficulty):
         # Clear the contents in the box
         self.__stringEntered.delete(0, "end")
@@ -220,7 +217,7 @@ class Flashfingers:
             )
     
 
-    # Resets the program to default settings
+    # Reset the program to default settings
     def __reset(self):
         # Clear the contents in the box
         self.__stringEntered.delete(0, "end")
