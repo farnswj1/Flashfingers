@@ -17,7 +17,7 @@ The user is free to do as many sessions as desired.
 import tkinter as tk
 from random import choice
 from numpy import mean
-from itertools import zip_longest
+from itertools import chain, zip_longest
 from time import time
 
 
@@ -150,26 +150,19 @@ class Flashfingers:
     # and the more characters are potentially used.
     def __generateRandomString(self, difficulty="medium"):
         # Filter candidate characters based on the difficulty
-        if difficulty == 'easy':
+        if difficulty == "easy":
             # Digits only
             validChars = ''.join([chr(i) for i in range(48, 58)])
             stringLength = 6
-        elif difficulty == 'medium':
+        elif difficulty == "medium":
             # Digits and lowercase letters
-            validChars = (
-                ''.join([chr(i) for i in range(48, 58)]) + 
-                ''.join([chr(i) for i in range(97, 123)])
-            ) 
+            validChars = ''.join([chr(i) for i in chain(range(48, 58), range(97, 123))])
             stringLength = 10
-        elif difficulty == 'hard':
+        elif difficulty == "hard":
             # Digits, lowercase letters, and uppercase letters
-            validChars = (
-                ''.join([chr(i) for i in range(48, 58)]) + 
-                ''.join([chr(i) for i in range(65, 91)]) + 
-                ''.join([chr(i) for i in range(97, 123)])
-            )
+            validChars = ''.join([chr(i) for i in chain(range(48, 58), range(65, 91), range(97, 123))])
             stringLength = 15
-        elif difficulty == 'expert':
+        elif difficulty == "expert":
             # Keyboard characters
             validChars = ''.join([chr(i) for i in range(33, 127)])
             stringLength = 20
