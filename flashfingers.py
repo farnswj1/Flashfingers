@@ -73,14 +73,22 @@ class Flashfingers:
         self.__stringEntered.place(relx=0.5, y=300, width=700, height=80, anchor=tk.CENTER)
         self.__stringEntered.bind('<Return>', self.__compute_results)
 
-        # Time elapsed label
-        self.__timeElapsedLabel = tk.Label(
+        # Info label
+        self.__infoLabel = tk.Label(
+            self.__window,
+            text="Press ENTER after typing the text above.",
+            font=self.__small_font,
+            bg="#000000",
+            fg="#ffffff"
+        )
+
+        # Time label
+        self.__timeLabel = tk.Label(
             self.__window,  
             font=self.__large_font,
             bg="#000000",
             fg="#ffffff"
         )
-        self.__timeElapsedLabel.place(x=50, y=375, anchor=tk.W)
 
         # Accuracy label
         self.__accuracyLabel = tk.Label(
@@ -89,7 +97,6 @@ class Flashfingers:
             bg="#000000",
             fg="#ffffff"
         )
-        self.__accuracyLabel.place(x=750, y=375, anchor=tk.E)
 
         # Easy Button
         self.__easy_button = tk.Button(
@@ -176,13 +183,20 @@ class Flashfingers:
         # Clear the contents in the box
         self.__stringEntered.delete(0, "end")
 
-        # Generate a random string, based on the difficulty
+        # Generate a random string based on the difficulty
         self.__stringLabel.config(text=self.__generateRandomString(difficulty))
         
         # Reset results variables
-        self.__timeElapsedLabel.config(text="")
+        self.__timeLabel.config(text="")
         self.__accuracyLabel.config(text="")
         self.__end_time = None
+
+        # Display the info label
+        self.__infoLabel.place(relx=0.5, y=375, anchor=tk.CENTER)
+        
+        # Hide the time and accuracy labels
+        self.__timeLabel.place_forget()
+        self.__accuracyLabel.place_forget()
 
         # Start timer
         self.__start_time = time()
@@ -194,7 +208,7 @@ class Flashfingers:
         if self.__stringLabel["text"] != "Select any difficulty!" and not self.__end_time:
             # Display the total amount of time elapsed
             self.__end_time = time()
-            self.__timeElapsedLabel.config(
+            self.__timeLabel.config(
                 text=f"{round(self.__end_time - self.__start_time, 2)}s"
             )
             
@@ -208,6 +222,13 @@ class Flashfingers:
                     )
                 }%"""
             )
+
+            # Hide the info label
+            self.__infoLabel.place_forget()
+
+            # Display the time and accuracy labels
+            self.__timeLabel.place(x=50, y=375, anchor=tk.W)
+            self.__accuracyLabel.place(x=750, y=375, anchor=tk.E)
     
 
     # Reset the program to default settings
@@ -217,10 +238,15 @@ class Flashfingers:
 
         # Reset the labels, results, and time to their default values
         self.__stringLabel.config(text="Select any difficulty!")
-        self.__timeElapsedLabel.config(text="")
+        self.__timeLabel.config(text="")
         self.__accuracyLabel.config(text="")
         self.__start_time = None
         self.__end_time = None
+
+        # Hide the info, time, and accuracy labels
+        self.__infoLabel.place_forget()
+        self.__timeLabel.place_forget()
+        self.__accuracyLabel.place_forget()
 
 
 # Execute the program
