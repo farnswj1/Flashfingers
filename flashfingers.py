@@ -68,7 +68,8 @@ class Flashfingers:
             textvariable=self.__stringInput, 
             font=self.__large_font,
             bg="#000000",
-            fg="#ffffff"
+            fg="#ffffff",
+            justify="center"
         )
         self.__stringEntered.place(relx=0.5, y=300, width=700, height=80, anchor=tk.CENTER)
         self.__stringEntered.bind('<Return>', self.__compute_results)
@@ -104,7 +105,7 @@ class Flashfingers:
             text="Easy", 
             command=lambda: self.__new_session("easy"), 
             font=self.__small_font, 
-            bg="#00ffff"
+            bg="#00ff00" # Green
         )
         self.__easy_button.place(x=125, y=475, width=150, anchor=tk.CENTER)
 
@@ -114,7 +115,7 @@ class Flashfingers:
             text="Medium", 
             command=lambda: self.__new_session("medium"), 
             font=self.__small_font, 
-            bg="#00ff00"
+            bg="#ffff00" # Yellow
         )
         self.__medium_button.place(x=308, y=475, width=150, anchor=tk.CENTER)
 
@@ -124,7 +125,7 @@ class Flashfingers:
             text="Hard", 
             command=lambda: self.__new_session("hard"), 
             font=self.__small_font, 
-            bg="#ffff00"
+            bg="#ff7000" # Orange
         )
         self.__hard_button.place(x=492, y=475, width=150, anchor=tk.CENTER)
 
@@ -134,7 +135,7 @@ class Flashfingers:
             text="Expert", 
             command=lambda: self.__new_session("expert"), 
             font=self.__small_font, 
-            bg="#ff0000"
+            bg="#ff0000" # Red
         )
         self.__expert_button.place(x=675, y=475, width=150, anchor=tk.CENTER)
 
@@ -144,7 +145,7 @@ class Flashfingers:
             text="Reset", 
             command=self.__reset, 
             font=self.__small_font, 
-            bg="#ffffff",
+            bg="#ffffff" # White
         )
         self.__reset_button.place(relx=0.5, y=550, width=700, anchor=tk.CENTER)
 
@@ -204,7 +205,7 @@ class Flashfingers:
 
     # Display the results underneath the input box
     def __compute_results(self, event):
-        # Only show the time if the user is in a session and doesn't have an end time
+        # Only show the results if the user is in a session and doesn't have an end time
         if self.__stringLabel["text"] != "Select any difficulty!" and not self.__end_time:
             # Display the total amount of time elapsed
             self.__end_time = time()
