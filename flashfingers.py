@@ -22,7 +22,7 @@ from time import time
 
 
 # Flashfingers class
-class Flashfingers:
+class Flashfingers(object):
     # Constructor
     def __init__(self):
         # Initialize and configure the window
@@ -72,7 +72,7 @@ class Flashfingers:
             justify="center"
         )
         self.__stringEntered.place(relx=0.5, y=300, width=700, height=80, anchor=tk.CENTER)
-        self.__stringEntered.bind('<Return>', self.__compute_results)
+        self.__stringEntered.bind("<Return>", self.__compute_results)
 
         # Info label
         self.__infoLabel = tk.Label(
@@ -168,7 +168,9 @@ class Flashfingers:
             stringLength = 10
         elif difficulty == "hard":
             # Digits, lowercase letters, and uppercase letters
-            validChars = ''.join([chr(i) for i in chain(range(48, 58), range(65, 91), range(97, 123))])
+            validChars = ''.join(
+                [chr(i) for i in chain(range(48, 58), range(65, 91), range(97, 123))]
+            )
             stringLength = 15
         elif difficulty == "expert":
             # Keyboard characters
