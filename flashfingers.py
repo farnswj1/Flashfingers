@@ -225,7 +225,8 @@ class Flashfingers(object):
             self.__accuracy_label.config(
                 text=f"""{
                     round(
-                        100 * mean([i == j for i, j in zip_longest(input_string, label_string)])
+                        100 * mean([i == j for i, j in zip_longest(input_string, label_string)]), 
+                        ndigits=1   
                     )
                 }%"""
             )
