@@ -42,40 +42,41 @@ class Flashfingers(object):
         self.__end_time = None
 
         # Title label
-        self.__stringLabel = tk.Label(
+        self.__string_label = tk.Label(
             self.__window, 
             text="FL@5HF1NG3R$", 
             font=self.__title_font,
             bg="#000000",
             fg="#ffffff"
         )
-        self.__stringLabel.place(relx=0.5, y=60, anchor=tk.CENTER)
+        self.__string_label.place(relx=0.5, y=60, anchor=tk.CENTER)
 
         # String label
-        self.__stringLabel = tk.Label(
+        self.__string_label = tk.Label(
             self.__window, 
             text="Select any difficulty!", 
             font=self.__large_font,
             bg="#000000",
             fg="#ffffff"
         )
-        self.__stringLabel.place(relx=0.5, y=200, anchor=tk.CENTER)
+        self.__string_label.place(relx=0.5, y=200, anchor=tk.CENTER)
 
         # String input field
-        self.__stringInput = tk.StringVar()
-        self.__stringEntered = tk.Entry(
+        self.__string_input = tk.StringVar()
+        self.__string_entered = tk.Entry(
             self.__window, 
-            textvariable=self.__stringInput, 
+            textvariable=self.__string_input, 
             font=self.__large_font,
             bg="#000000",
             fg="#ffffff",
             justify="center"
         )
-        self.__stringEntered.place(relx=0.5, y=300, width=700, height=80, anchor=tk.CENTER)
-        self.__stringEntered.bind("<Return>", self.__compute_results)
+        self.__string_entered.place(relx=0.5, y=300, width=700, height=80, anchor=tk.CENTER)
+        self.__string_entered.bind("<Return>", self.__compute_results)
+        self.__string_entered.focus()
 
         # Info label
-        self.__infoLabel = tk.Label(
+        self.__info_label = tk.Label(
             self.__window,
             text="Press ENTER after typing the text above.",
             font=self.__small_font,
@@ -84,7 +85,7 @@ class Flashfingers(object):
         )
 
         # Time label
-        self.__timeLabel = tk.Label(
+        self.__time_label = tk.Label(
             self.__window,  
             font=self.__large_font,
             bg="#000000",
@@ -92,7 +93,7 @@ class Flashfingers(object):
         )
 
         # Accuracy label
-        self.__accuracyLabel = tk.Label(
+        self.__accuracy_label = tk.Label(
             self.__window,  
             font=self.__large_font,
             bg="#000000",
@@ -156,50 +157,53 @@ class Flashfingers(object):
     # Generate a random string based on the difficulty.
     # The greater the difficulty, the longer the string 
     # and the more characters are potentially used.
-    def __generateRandomString(self, difficulty="medium"):
+    def __generate_random_string(self, difficulty="medium"):
         # Filter candidate characters based on the difficulty
         if difficulty == "easy":
             # Digits only
-            validChars = ''.join([chr(i) for i in range(48, 58)])
-            stringLength = 6
+            valid_chars = ''.join([chr(i) for i in range(48, 58)])
+            string_length = 6
         elif difficulty == "medium":
             # Digits and lowercase letters
-            validChars = ''.join([chr(i) for i in chain(range(48, 58), range(97, 123))])
-            stringLength = 10
+            valid_chars = ''.join([chr(i) for i in chain(range(48, 58), range(97, 123))])
+            string_length = 10
         elif difficulty == "hard":
             # Digits, lowercase letters, and uppercase letters
-            validChars = ''.join(
+            valid_chars = ''.join(
                 [chr(i) for i in chain(range(48, 58), range(65, 91), range(97, 123))]
             )
-            stringLength = 15
+            string_length = 15
         elif difficulty == "expert":
             # Keyboard characters
-            validChars = ''.join([chr(i) for i in range(33, 127)])
-            stringLength = 20
+            valid_chars = ''.join([chr(i) for i in range(33, 127)])
+            string_length = 20
         
         # Build and return the string using random valid characters
-        return ''.join([choice(validChars) for i in range(stringLength)])
+        return ''.join([choice(valid_chars) for i in range(string_length)])
     
 
     # Generate a new string and set up the session
     def __new_session(self, difficulty):
         # Clear the contents in the box
-        self.__stringEntered.delete(0, "end")
+        self.__string_entered.delete(0, "end")
 
         # Generate a random string based on the difficulty
-        self.__stringLabel.config(text=self.__generateRandomString(difficulty))
+        self.__string_label.config(text=self.__generate_random_string(difficulty))
         
         # Reset results variables
-        self.__timeLabel.config(text="")
-        self.__accuracyLabel.config(text="")
+        self.__time_label.config(text="")
+        self.__accuracy_label.config(text="")
         self.__end_time = None
 
         # Display the info label
-        self.__infoLabel.place(relx=0.5, y=375, anchor=tk.CENTER)
+        self.__info_label.place(relx=0.5, y=375, anchor=tk.CENTER)
         
         # Hide the time and accuracy labels
-        self.__timeLabel.place_forget()
-        self.__accuracyLabel.place_forget()
+        self.__time_label.place_forget()
+        self.__accuracy_label.place_forget()
+
+        # Automatically select the box so the user can insert input without clicking it
+        self.__string_entered.focus()
 
         # Start timer
         self.__start_time = time()
@@ -208,17 +212,17 @@ class Flashfingers(object):
     # Display the results underneath the input box
     def __compute_results(self, event):
         # Only show the results if the user is in a session and doesn't have an end time
-        if self.__stringLabel["text"] != "Select any difficulty!" and not self.__end_time:
+        if self.__string_label["text"] != "Select any difficulty!" and not self.__end_time:
             # Display the total amount of time elapsed
             self.__end_time = time()
-            self.__timeLabel.config(
+            self.__time_label.config(
                 text=f"{round(self.__end_time - self.__start_time, 2)}s"
             )
             
             # Display the accuracy
-            input_string = self.__stringInput.get()
-            label_string = self.__stringLabel["text"]
-            self.__accuracyLabel.config(
+            input_string = self.__string_input.get()
+            label_string = self.__string_label["text"]
+            self.__accuracy_label.config(
                 text=f"""{
                     round(
                         100 * mean([i == j for i, j in zip_longest(input_string, label_string)])
@@ -227,29 +231,29 @@ class Flashfingers(object):
             )
 
             # Hide the info label
-            self.__infoLabel.place_forget()
+            self.__info_label.place_forget()
 
             # Display the time and accuracy labels
-            self.__timeLabel.place(x=50, y=375, anchor=tk.W)
-            self.__accuracyLabel.place(x=750, y=375, anchor=tk.E)
+            self.__time_label.place(x=50, y=375, anchor=tk.W)
+            self.__accuracy_label.place(x=750, y=375, anchor=tk.E)
     
 
     # Reset the program to default settings
     def __reset(self):
         # Clear the contents in the box
-        self.__stringEntered.delete(0, "end")
+        self.__string_entered.delete(0, "end")
 
         # Reset the labels, results, and time to their default values
-        self.__stringLabel.config(text="Select any difficulty!")
-        self.__timeLabel.config(text="")
-        self.__accuracyLabel.config(text="")
+        self.__string_label.config(text="Select any difficulty!")
+        self.__time_label.config(text="")
+        self.__accuracy_label.config(text="")
         self.__start_time = None
         self.__end_time = None
 
         # Hide the info, time, and accuracy labels
-        self.__infoLabel.place_forget()
-        self.__timeLabel.place_forget()
-        self.__accuracyLabel.place_forget()
+        self.__info_label.place_forget()
+        self.__time_label.place_forget()
+        self.__accuracy_label.place_forget()
 
 
 # Execute the program
