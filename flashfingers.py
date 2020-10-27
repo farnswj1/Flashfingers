@@ -43,8 +43,8 @@ class Flashfingers(object):
 
         # Title label
         self.__string_label = tk.Label(
-            self.__window, 
-            text="FL@5HF1NG3R$", 
+            self.__window,
+            text="FL@5HF1NG3R$",
             font=self.__title_font,
             bg="#000000",
             fg="#ffffff"
@@ -53,8 +53,8 @@ class Flashfingers(object):
 
         # String label
         self.__string_label = tk.Label(
-            self.__window, 
-            text="Select any difficulty!", 
+            self.__window,
+            text="Select any difficulty!",
             font=self.__large_font,
             bg="#000000",
             fg="#ffffff"
@@ -64,8 +64,8 @@ class Flashfingers(object):
         # String input field
         self.__string_input = tk.StringVar()
         self.__string_entered = tk.Entry(
-            self.__window, 
-            textvariable=self.__string_input, 
+            self.__window,
+            textvariable=self.__string_input,
             font=self.__large_font,
             bg="#000000",
             fg="#ffffff",
@@ -86,7 +86,7 @@ class Flashfingers(object):
 
         # Time label
         self.__time_label = tk.Label(
-            self.__window,  
+            self.__window,
             font=self.__large_font,
             bg="#000000",
             fg="#ffffff"
@@ -94,7 +94,7 @@ class Flashfingers(object):
 
         # Accuracy label
         self.__accuracy_label = tk.Label(
-            self.__window,  
+            self.__window,
             font=self.__large_font,
             bg="#000000",
             fg="#ffffff"
@@ -102,51 +102,56 @@ class Flashfingers(object):
 
         # Easy Button
         self.__easy_button = tk.Button(
-            self.__window, 
-            text="Easy", 
-            command=lambda: self.__new_session("easy"), 
-            font=self.__small_font, 
-            bg="#00ff00" # Green
+            self.__window,
+            text="Easy",
+            command=lambda: self.__new_session("easy"),
+            font=self.__small_font,
+            bg="#00ff00", # Green
+            activebackground="#00ff00" # Green
         )
         self.__easy_button.place(x=125, y=475, width=150, anchor=tk.CENTER)
 
         # Medium Button
         self.__medium_button = tk.Button(
-            self.__window, 
-            text="Medium", 
-            command=lambda: self.__new_session("medium"), 
-            font=self.__small_font, 
-            bg="#ffff00" # Yellow
+            self.__window,
+            text="Medium",
+            command=lambda: self.__new_session("medium"),
+            font=self.__small_font,
+            bg="#ffff00", # Yellow
+            activebackground="#ffff00" # Yellow
         )
         self.__medium_button.place(x=308, y=475, width=150, anchor=tk.CENTER)
 
         # Hard Button
         self.__hard_button = tk.Button(
-            self.__window, 
-            text="Hard", 
-            command=lambda: self.__new_session("hard"), 
-            font=self.__small_font, 
-            bg="#ff7000" # Orange
+            self.__window,
+            text="Hard",
+            command=lambda: self.__new_session("hard"),
+            font=self.__small_font,
+            bg="#ff7000", # Orange
+            activebackground="#ff7000" # Orange
         )
         self.__hard_button.place(x=492, y=475, width=150, anchor=tk.CENTER)
 
         # Expert Button
         self.__expert_button = tk.Button(
-            self.__window, 
-            text="Expert", 
-            command=lambda: self.__new_session("expert"), 
-            font=self.__small_font, 
-            bg="#ff0000" # Red
+            self.__window,
+            text="Expert",
+            command=lambda: self.__new_session("expert"),
+            font=self.__small_font,
+            bg="#ff0000", # Red
+            activebackground="#ff0000" # Red
         )
         self.__expert_button.place(x=675, y=475, width=150, anchor=tk.CENTER)
 
         # Reset Button
         self.__reset_button = tk.Button(
-            self.__window, 
-            text="Reset", 
-            command=self.__reset, 
-            font=self.__small_font, 
-            bg="#ffffff" # White
+            self.__window,
+            text="Reset",
+            command=self.__reset,
+            font=self.__small_font,
+            bg="#ffffff", # White
+            activebackground="#ffffff" # White
         )
         self.__reset_button.place(relx=0.5, y=550, width=700, anchor=tk.CENTER)
 
@@ -225,8 +230,8 @@ class Flashfingers(object):
             self.__accuracy_label.config(
                 text=f"""{
                     round(
-                        100 * mean([i == j for i, j in zip_longest(input_string, label_string)]), 
-                        ndigits=1   
+                        100 * mean([i == j for i, j in zip_longest(input_string, label_string)]),
+                        ndigits=1
                     )
                 }%"""
             )
