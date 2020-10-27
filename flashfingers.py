@@ -30,6 +30,7 @@ class Flashfingers(object):
         self.__window.config(bg="#000000")
         self.__window.title("Flashfingers")
         self.__window.geometry("800x600")
+        self.__window.resizable(width=False, height=False)
         
         # Generate the font and sizes
         self.__font_style = "Fixedsys"
