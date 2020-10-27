@@ -217,7 +217,7 @@ class Flashfingers(object):
     # Display the results underneath the input box
     def __compute_results(self, event):
         # Only show the results if the user is in a session and doesn't have an end time
-        if self.__string_label["text"] != "Select any difficulty!" and not self.__end_time:
+        if self.__start_time and not self.__end_time:
             # Display the total amount of time elapsed
             self.__end_time = time()
             self.__time_label.config(
