@@ -197,8 +197,8 @@ class Flashfingers(object):
         self.__string_label.config(text=self.__generate_random_string(difficulty))
         
         # Reset results variables
-        self.__time_label.config(text="")
-        self.__accuracy_label.config(text="")
+        self.__time_label.config(text="", fg="#ffffff") # White
+        self.__accuracy_label.config(text="", fg="#ffffff") # White
         self.__end_time = None
 
         # Display the info label
@@ -219,24 +219,39 @@ class Flashfingers(object):
     def __compute_results(self, event):
         # Only show the results if the user is in a session and doesn't have an end time
         if self.__start_time and not self.__end_time:
-            # Display the total amount of time elapsed
+            # Record the end time
             self.__end_time = time()
-            self.__time_label.config(
-                text=f"{round(self.__end_time - self.__start_time, 2)}s"
-            )
-            
-            # Display the accuracy
+
+            # Get the generated string and the input string
             input_string = self.__string_input.get()
             label_string = self.__string_label["text"]
-            self.__accuracy_label.config(
-                text=f"""{
-                    round(
-                        100 * mean([i == j for i, j in zip_longest(input_string, label_string)]),
-                        ndigits=1
-                    )
-                }%"""
-            )
 
+            # Display the total amount of time elapsed
+            time_elapsed = round(
+                self.__end_time - self.__start_time,
+                ndigits=2
+            )
+            self.__time_label.config(text=f"{time_elapsed}s")
+
+            # Change the time text color, depending on the time
+            if time_elapsed <= (0.5 * len(label_string)) + 2:
+                self.__time_label.config(fg="#ffff00") # Yellow
+            elif time_elapsed > 1.5 * len(label_string):
+                self.__time_label.config(fg="#ff0000") # Red
+            
+            # Compute and display the accuracy
+            accuracy = round(
+                100 * mean([i == j for i, j in zip_longest(input_string, label_string)]),
+                ndigits=1
+            )
+            self.__accuracy_label.config(text=f"{accuracy}%")
+
+            # Change the accuracy text color, depending on the score
+            if accuracy == 100:
+                self.__accuracy_label.config(fg="#ffff00") # Yellow
+            elif accuracy < 70:
+                self.__accuracy_label.config(fg="#ff0000") # Red
+            
             # Hide the info label
             self.__info_label.place_forget()
 
@@ -252,8 +267,8 @@ class Flashfingers(object):
 
         # Reset the labels, results, and time to their default values
         self.__string_label.config(text="Select any difficulty!")
-        self.__time_label.config(text="")
-        self.__accuracy_label.config(text="")
+        self.__time_label.config(text="", fg="#ffffff") # White
+        self.__accuracy_label.config(text="", fg="#ffffff") # White
         self.__start_time = None
         self.__end_time = None
 
