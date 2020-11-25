@@ -15,7 +15,7 @@ The user is free to do as many sessions as desired.
 
 # Imported modules
 import tkinter as tk
-from random import choice
+from random import choices
 from numpy import mean
 from itertools import chain, zip_longest
 from time import time
@@ -185,7 +185,7 @@ class Flashfingers(object):
             string_length = 20
         
         # Build and return the string using random valid characters
-        return ''.join([choice(valid_chars) for i in range(string_length)])
+        return ''.join(choices(valid_chars, k=string_length))
     
 
     # Generate a new string and set up the session
