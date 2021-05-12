@@ -163,7 +163,8 @@ class Flashfingers(object):
     # Generate a random string based on the difficulty.
     # The greater the difficulty, the longer the string 
     # and the more characters are potentially used.
-    def __generate_random_string(self, difficulty="medium"):
+    @staticmethod
+    def __generate_random_string(difficulty="medium"):
         # Filter candidate characters based on the difficulty
         if difficulty == "easy":
             # Digits only
