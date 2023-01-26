@@ -22,13 +22,22 @@ from time import time
 import tkinter as tk
 
 
+# Constants
+WHITE = "#ffffff"
+BLACK = "#000000"
+GREEN = "#00ff00"
+YELLOW = "#ffff00"
+ORANGE = "#ff7000"
+RED = "#ff0000"
+
+
 # Flashfingers class
 class Flashfingers(object):
     # Constructor
     def __init__(self):
         # Initialize and configure the window
         self.__window = tk.Tk()
-        self.__window.config(bg="#000000")
+        self.__window.config(bg=BLACK)
         self.__window.title("Flashfingers")
         self.__window.geometry("800x600")
         self.__window.resizable(width=False, height=False)
@@ -48,8 +57,8 @@ class Flashfingers(object):
             self.__window,
             text="FL@5HF1NG3R$",
             font=self.__title_font,
-            bg="#000000",
-            fg="#ffffff"
+            bg=BLACK,
+            fg=WHITE
         )
         self.__string_label.place(relx=0.5, y=60, anchor=tk.CENTER)
 
@@ -58,8 +67,8 @@ class Flashfingers(object):
             self.__window,
             text="Select any difficulty!",
             font=self.__large_font,
-            bg="#000000",
-            fg="#ffffff"
+            bg=BLACK,
+            fg=WHITE
         )
         self.__string_label.place(relx=0.5, y=200, anchor=tk.CENTER)
 
@@ -69,8 +78,8 @@ class Flashfingers(object):
             self.__window,
             textvariable=self.__string_input,
             font=self.__large_font,
-            bg="#000000",
-            fg="#ffffff",
+            bg=BLACK,
+            fg=WHITE,
             justify="center"
         )
         self.__string_entered.place(relx=0.5, y=300, width=700, height=80, anchor=tk.CENTER)
@@ -82,24 +91,24 @@ class Flashfingers(object):
             self.__window,
             text="Press ENTER after typing the text above.",
             font=self.__small_font,
-            bg="#000000",
-            fg="#ffffff"
+            bg=BLACK,
+            fg=WHITE
         )
 
         # Time label
         self.__time_label = tk.Label(
             self.__window,
             font=self.__large_font,
-            bg="#000000",
-            fg="#ffffff"
+            bg=BLACK,
+            fg=WHITE
         )
 
         # Accuracy label
         self.__accuracy_label = tk.Label(
             self.__window,
             font=self.__large_font,
-            bg="#000000",
-            fg="#ffffff"
+            bg=BLACK,
+            fg=WHITE
         )
 
         # Easy Button
@@ -108,8 +117,8 @@ class Flashfingers(object):
             text="Easy",
             command=lambda: self.__new_session("easy"),
             font=self.__small_font,
-            bg="#00ff00", # Green
-            activebackground="#00ff00" # Green
+            bg=GREEN,
+            activebackground=GREEN
         )
         self.__easy_button.place(x=125, y=475, width=150, anchor=tk.CENTER)
 
@@ -119,8 +128,8 @@ class Flashfingers(object):
             text="Medium",
             command=lambda: self.__new_session("medium"),
             font=self.__small_font,
-            bg="#ffff00", # Yellow
-            activebackground="#ffff00" # Yellow
+            bg=YELLOW,
+            activebackground=YELLOW
         )
         self.__medium_button.place(x=308, y=475, width=150, anchor=tk.CENTER)
 
@@ -130,8 +139,8 @@ class Flashfingers(object):
             text="Hard",
             command=lambda: self.__new_session("hard"),
             font=self.__small_font,
-            bg="#ff7000", # Orange
-            activebackground="#ff7000" # Orange
+            bg=ORANGE,
+            activebackground=ORANGE
         )
         self.__hard_button.place(x=492, y=475, width=150, anchor=tk.CENTER)
 
@@ -141,8 +150,8 @@ class Flashfingers(object):
             text="Expert",
             command=lambda: self.__new_session("expert"),
             font=self.__small_font,
-            bg="#ff0000", # Red
-            activebackground="#ff0000" # Red
+            bg=RED,
+            activebackground=RED
         )
         self.__expert_button.place(x=675, y=475, width=150, anchor=tk.CENTER)
 
@@ -152,8 +161,8 @@ class Flashfingers(object):
             text="Reset",
             command=self.__reset,
             font=self.__small_font,
-            bg="#ffffff", # White
-            activebackground="#ffffff" # White
+            bg=WHITE,
+            activebackground=WHITE
         )
         self.__reset_button.place(relx=0.5, y=550, width=700, anchor=tk.CENTER)
 
@@ -199,8 +208,8 @@ class Flashfingers(object):
         self.__string_label.config(text=self.__generate_random_string(difficulty))
 
         # Reset results variables
-        self.__time_label.config(text="", fg="#ffffff") # White
-        self.__accuracy_label.config(text="", fg="#ffffff") # White
+        self.__time_label.config(text="", fg=WHITE)
+        self.__accuracy_label.config(text="", fg=WHITE)
         self.__end_time = None
 
         # Display the info label
@@ -236,9 +245,9 @@ class Flashfingers(object):
 
             # Change the time text color, depending on the time
             if time_elapsed <= (0.5 * len(label_string)) + 2:
-                self.__time_label.config(fg="#ffff00") # Yellow
+                self.__time_label.config(fg=YELLOW)
             elif time_elapsed > 1.5 * len(label_string):
-                self.__time_label.config(fg="#ff0000") # Red
+                self.__time_label.config(fg=RED)
 
             # Compute and display the accuracy
             accuracy = round(
@@ -249,9 +258,9 @@ class Flashfingers(object):
 
             # Change the accuracy text color, depending on the score
             if accuracy == 100:
-                self.__accuracy_label.config(fg="#ffff00") # Yellow
+                self.__accuracy_label.config(fg=YELLOW)
             elif accuracy < 70:
-                self.__accuracy_label.config(fg="#ff0000") # Red
+                self.__accuracy_label.config(fg=RED)
 
             # Hide the info label
             self.__info_label.place_forget()
@@ -267,8 +276,8 @@ class Flashfingers(object):
 
         # Reset the labels, results, and time to their default values
         self.__string_label.config(text="Select any difficulty!")
-        self.__time_label.config(text="", fg="#ffffff") # White
-        self.__accuracy_label.config(text="", fg="#ffffff") # White
+        self.__time_label.config(text="", fg=WHITE)
+        self.__accuracy_label.config(text="", fg=WHITE)
         self.__start_time = None
         self.__end_time = None
 
