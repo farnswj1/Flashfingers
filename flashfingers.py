@@ -3,22 +3,23 @@ Justin Farnsworth
 Flashfingers
 October 24, 2020
 
-This program allows users to improve their typing speed. The user will be given 
-four difficulties to choose from. Once a difficulty has been chosen, the user 
-must type out the text on the screen as fast and accurately as possible. As the 
-difficulty increases, the text to copy increases in length and a wider range of 
-characters are more likely to appear. Once the string has been typed out, the user 
-can press Enter on the keyboard, where the results will be computed.The results 
-will show the user the time taken to type out the text as well as the accuracy. 
+This program allows users to improve their typing speed. The user will be given
+four difficulties to choose from. Once a difficulty has been chosen, the user
+must type out the text on the screen as fast and accurately as possible. As the
+difficulty increases, the text to copy increases in length and a wider range of
+characters are more likely to appear. Once the string has been typed out, the user
+can press Enter on the keyboard, where the results will be computed.The results
+will show the user the time taken to type out the text as well as the accuracy.
 The user is free to do as many sessions as desired.
 '''
 
+
 # Imported modules
-import tkinter as tk
 from random import choices
-from numpy import mean
+from statistics import mean
 from itertools import chain, zip_longest
 from time import time
+import tkinter as tk
 
 
 # Flashfingers class
@@ -31,7 +32,7 @@ class Flashfingers(object):
         self.__window.title("Flashfingers")
         self.__window.geometry("800x600")
         self.__window.resizable(width=False, height=False)
-        
+
         # Generate the font and sizes
         self.__font_style = "Fixedsys"
         self.__small_font = (self.__font_style, 20)
@@ -156,38 +157,38 @@ class Flashfingers(object):
         )
         self.__reset_button.place(relx=0.5, y=550, width=700, anchor=tk.CENTER)
 
+    # Run the window loop
+    def run(self):
         # Run the tkinter loop
         self.__window.mainloop()
-    
 
     # Generate a random string based on the difficulty.
-    # The greater the difficulty, the longer the string 
+    # The greater the difficulty, the longer the string
     # and the more characters are potentially used.
     @staticmethod
     def __generate_random_string(difficulty="medium"):
         # Filter candidate characters based on the difficulty
         if difficulty == "easy":
             # Digits only
-            valid_chars = ''.join([chr(i) for i in range(48, 58)])
+            valid_chars = ''.join(chr(i) for i in range(48, 58))
             string_length = 6
         elif difficulty == "medium":
             # Digits and lowercase letters
-            valid_chars = ''.join([chr(i) for i in chain(range(48, 58), range(97, 123))])
+            valid_chars = ''.join(chr(i) for i in chain(range(48, 58), range(97, 123)))
             string_length = 10
         elif difficulty == "hard":
             # Digits, lowercase letters, and uppercase letters
             valid_chars = ''.join(
-                [chr(i) for i in chain(range(48, 58), range(65, 91), range(97, 123))]
+                chr(i) for i in chain(range(48, 58), range(65, 91), range(97, 123))
             )
             string_length = 15
         elif difficulty == "expert":
             # Keyboard characters
-            valid_chars = ''.join([chr(i) for i in range(33, 127)])
+            valid_chars = ''.join(chr(i) for i in range(33, 127))
             string_length = 20
-        
+
         # Build and return the string using random valid characters
         return ''.join(choices(valid_chars, k=string_length))
-    
 
     # Generate a new string and set up the session
     def __new_session(self, difficulty):
@@ -196,7 +197,7 @@ class Flashfingers(object):
 
         # Generate a random string based on the difficulty
         self.__string_label.config(text=self.__generate_random_string(difficulty))
-        
+
         # Reset results variables
         self.__time_label.config(text="", fg="#ffffff") # White
         self.__accuracy_label.config(text="", fg="#ffffff") # White
@@ -204,7 +205,7 @@ class Flashfingers(object):
 
         # Display the info label
         self.__info_label.place(relx=0.5, y=375, anchor=tk.CENTER)
-        
+
         # Hide the time and accuracy labels
         self.__time_label.place_forget()
         self.__accuracy_label.place_forget()
@@ -214,7 +215,6 @@ class Flashfingers(object):
 
         # Start timer
         self.__start_time = time()
-    
 
     # Display the results underneath the input box
     def __compute_results(self, event):
@@ -239,10 +239,10 @@ class Flashfingers(object):
                 self.__time_label.config(fg="#ffff00") # Yellow
             elif time_elapsed > 1.5 * len(label_string):
                 self.__time_label.config(fg="#ff0000") # Red
-            
+
             # Compute and display the accuracy
             accuracy = round(
-                100 * mean([i == j for i, j in zip_longest(input_string, label_string)]),
+                100 * mean(i == j for i, j in zip_longest(input_string, label_string)),
                 ndigits=1
             )
             self.__accuracy_label.config(text=f"{accuracy}%")
@@ -252,14 +252,13 @@ class Flashfingers(object):
                 self.__accuracy_label.config(fg="#ffff00") # Yellow
             elif accuracy < 70:
                 self.__accuracy_label.config(fg="#ff0000") # Red
-            
+
             # Hide the info label
             self.__info_label.place_forget()
 
             # Display the time and accuracy labels
             self.__time_label.place(x=50, y=375, anchor=tk.W)
             self.__accuracy_label.place(x=750, y=375, anchor=tk.E)
-    
 
     # Reset the program to default settings
     def __reset(self):
@@ -281,4 +280,5 @@ class Flashfingers(object):
 
 # Execute the program
 if __name__ == "__main__":
-    Flashfingers()
+    app = Flashfingers()
+    app.run()
